@@ -1,0 +1,49 @@
+{% extends "userbase.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron text-center">
+
+        {%if project %}
+        <h1>Edit</h1>
+        {%else%}
+        <h1>Add New Project</h1>
+        {%endif%}
+        <form action="addProject" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {%if project %}
+            <input type="hidden" name="projectId" value="{{project.project_id}}">
+
+            {%else%}
+            <input type="hidden" name="projectId" value="0">
+            {%endif%}
+            <div class="form-group">
+                {{ form.inputProject.label(class="sr-only") }}
+                {{ form.inputProject(class="form-control", placeholder="Project") }}
+                {% if form.inputProject.errors %}
+                {% for error in form.inputProject.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error: </strong>{{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.inputProjectDeadline(class="form-control") }}
+                {% if form.inputProjectDeadline.errors %}
+                {% for error in form.inputProjectDeadline.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error: </strong>{{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            {{ form.submit(class="btn btn-lg btn-success btn-block") }}
+        </form>
+        
+    </div>
+
+
+</div>
+
+{% endblock %}
